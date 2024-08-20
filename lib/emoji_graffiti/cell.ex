@@ -4,8 +4,6 @@ defmodule EmojiGraffiti.Cell do
 
   schema "cells" do
     field :emoji, :string
-
-    timestamps(type: :utc_datetime)
   end
 
   @doc false

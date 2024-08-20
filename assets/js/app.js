@@ -21,7 +21,7 @@ import "phoenix_html"
 import { Socket } from "phoenix"
 import { LiveSocket } from "phoenix_live_view"
 import topbar from "../vendor/topbar"
-import { Picker } from "emoji-picker-element"
+import { Picker } from "../vendor/emoji-picker-element"
 
 let picker = undefined;
 let grid = undefined;
