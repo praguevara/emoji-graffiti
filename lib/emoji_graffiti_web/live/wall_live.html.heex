@@ -1,0 +1,28 @@
+<div
+  class="flex flex-col h-screen overflow-hidden bg-purple-50 bg-opacity-15"
+  id="emoji-container"
+>
+  <div class="flex-grow overflow-auto" id="scrollable-content">
+    <div class="flex justify-center">
+      <div class="flex flex-col items-center text-xl mt-6 mb-2">
+        <h1 class="text-1xl text-purple-900 font-semibold">
+          Graffiti for all the world to see!
+        </h1>
+        <h3 class="text-xs opacity-75 text-purple-700">by <span>@praguevara</span></h3>
+      </div>
+    </div>
+    <div class="relative">
+      <div id="emoji-grid" class="grid grid-cols-12 px-8" phx-hook="EmojiGrid">
+        <%= for %{id: i, emoji: emoji} <- @emoji do %>
+          <.cell i={i} emoji={emoji} />
+        <% end %>
+      </div>
+    </div>
+  </div>
+  <emoji-picker
+    id="emoji-picker"
+    class="w-full transition-all duration-300 ease-in-out h-0"
+    phx-hook="EmojiPicker"
+  >
+  </emoji-picker>
+</div>

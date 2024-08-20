@@ -1,0 +1,9 @@
+@import "tailwindcss/base";
+@import "tailwindcss/components";
+@import "tailwindcss/utilities";
+
+/* This file is for your main application CSS */
+
+.cell {
+  @apply aspect-square text-2xl md:text-4xl lg:text-6xl rounded-md focus:border-2 border-dashed border-purple-600
+}
