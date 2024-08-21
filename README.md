@@ -3,7 +3,7 @@
 A simple wall where everyone can write emoji.
 
 # TODO
-[ ] Emoji input validation
+[x] Emoji input validation
 [ ] Lazy loading?
 [ ] Cache performance
 [ ] :ets instead of map?
