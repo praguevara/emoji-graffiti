@@ -1,6 +1,8 @@
 defmodule EmojiGraffitiWeb.WallLive do
   use Phoenix.LiveView
+
   alias EmojiGraffiti.Wall
+  alias EmojiGraffiti.Validator
 
   @max_id 9999
 
@@ -17,7 +19,10 @@ defmodule EmojiGraffitiWeb.WallLive do
   end
 
   def handle_event("change_emoji", %{"id" => i, "value" => input_emoji}, socket) do
-    Wall.update(i, input_emoji)
+    with {:ok, _msg} <- Validator.validate_emoji(input_emoji) do
+      Wall.update(i, input_emoji)
+    end
+
     {:noreply, socket}
   end
 
