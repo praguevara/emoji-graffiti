@@ -2,6 +2,8 @@ defmodule EmojiGraffitiWeb.WallLive do
   use Phoenix.LiveView
   alias EmojiGraffiti.Wall
 
+  @max_id 9999
+
   import EmojiGraffitiWeb.CellComponent, only: [cell: 1]
 
   def mount(_params, _session, socket) do
@@ -9,7 +11,7 @@ defmodule EmojiGraffitiWeb.WallLive do
       Phoenix.PubSub.subscribe(EmojiGraffiti.PubSub, "emoji_updates")
     end
 
-    emoji = Wall.get_many(0, 9999)
+    emoji = Wall.get_many(0, @max_id)
 
     {:ok, assign(socket, emoji: emoji)}
   end
