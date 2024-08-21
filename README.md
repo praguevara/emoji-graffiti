@@ -1,4 +1,6 @@
-# EmojiGraffiti
+# Emoji Graffiti
+
+[Link](https://emoji.praguevara.dev)
 
 A simple wall where everyone can write emoji.
 
