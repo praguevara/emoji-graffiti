@@ -12,9 +12,13 @@
       </div>
     </div>
     <div class="relative max-w-screen-lg mx-auto">
-      <div id="emoji-grid" class="grid grid-cols-12 px-4" phx-hook="EmojiGrid">
-        <%= for %{id: i, emoji: emoji} <- @emoji do %>
-          <.cell i={i} emoji={emoji} />
+      <div id="emoji-grid" class="grid px-4" phx-hook="EmojiGrid">
+        <%= for row <- Enum.chunk_every(@emoji, 12) do %>
+          <div class="grid grid-cols-12">
+            <%= for %{id: i, emoji: emoji} <- row do %>
+              <.cell i={i} emoji={emoji} />
+            <% end %>
+          </div>
         <% end %>
       </div>
     </div>
