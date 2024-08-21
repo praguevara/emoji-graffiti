@@ -65,7 +65,15 @@ Hooks.EmojiGrid = {
       const emoId = `emo-${hexI}`;
 
       const emojiButton = document.getElementById(emoId);
-      emojiButton.innerText = emoji;
+
+      emojiButton.classList.add('scale-75');
+
+      emojiButton.addEventListener('transitionend', function handler() {
+        emojiButton.innerText = emoji;
+
+        emojiButton.classList.remove('scale-75');
+        emojiButton.removeEventListener('transitionend', handler);
+      });
     });
   }
 };
