@@ -11,8 +11,8 @@
         <h3 class="text-xs opacity-75 text-purple-700">by <span>@praguevara</span></h3>
       </div>
     </div>
-    <div class="relative">
-      <div id="emoji-grid" class="grid grid-cols-12 px-8" phx-hook="EmojiGrid">
+    <div class="relative max-w-screen-lg mx-auto">
+      <div id="emoji-grid" class="grid grid-cols-12 px-4" phx-hook="EmojiGrid">
         <%= for %{id: i, emoji: emoji} <- @emoji do %>
           <.cell i={i} emoji={emoji} />
         <% end %>
