@@ -15,14 +15,7 @@ defmodule EmojiGraffitiWeb.WallLive do
   end
 
   def handle_event("change_emoji", %{"id" => i, "value" => input_emoji}, socket) do
-    with {:ok, _cell} <- Wall.update(i, input_emoji) do
-      Phoenix.PubSub.broadcast(
-        EmojiGraffiti.PubSub,
-        "emoji_updates",
-        {:emoji_changed, i, input_emoji}
-      )
-    end
-
+    Wall.update(i, input_emoji)
     {:noreply, socket}
   end
 

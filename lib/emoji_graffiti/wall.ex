@@ -52,6 +52,13 @@ defmodule EmojiGraffiti.Wall do
   def handle_call({:update, id, emoji}, _from, state) do
     cell = Map.get(state, id) || %Cell{id: id}
     updated_cell = %{cell | emoji: emoji}
+
+    Phoenix.PubSub.broadcast(
+      EmojiGraffiti.PubSub,
+      "emoji_updates",
+      {:emoji_changed, id, emoji}
+    )
+
     new_state = Map.put(state, id, updated_cell)
     persist_to_db(updated_cell)
     {:reply, {:ok, updated_cell}, new_state}
