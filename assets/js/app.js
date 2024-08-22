@@ -26,18 +26,30 @@ import { Picker } from "../vendor/emoji-picker-element"
 let picker = undefined;
 let grid = undefined;
 let scrollableContent = undefined;
-let targetCellId = undefined;
+let targetCell = undefined;
 
 function showEmojiPicker() {
   picker.classList.remove('h-0');
   picker.classList.add('h-96');
   scrollableContent.style.maxHeight = `calc(100vh - ${picker.offsetHeight}px)`;
+  picker.focus();
 }
 
 function hideEmojiPicker() {
   picker.classList.remove('h-96');
   picker.classList.add('h-0');
   scrollableContent.style.maxHeight = '100%';
+}
+
+function selectCell(cell) {
+  targetCell?.classList.remove("cell-selected");
+  targetCell = cell;
+  targetCell.classList.add("cell-selected");
+}
+
+function unselectCell() {
+  targetCell?.classList.remove("cell-selected");
+  targetCell = undefined;
 }
 
 let Hooks = {};
@@ -47,14 +59,22 @@ Hooks.EmojiGrid = {
     grid = this.el;
     scrollableContent = document.getElementById("scrollable-content");
     
-    this.el.addEventListener("focusin", e => {
-      cellIdStr = e.target.id.match(/emo-(.+)/)[1];
-      targetCellId = parseInt(cellIdStr, 16);
+    this.el.addEventListener("click", e => {
+      let match = e.target.id.match(/emo-(.+)/);
+      if (!match) {
+        return;
+      }
+
+      selectCell(e.target);
+      
+      cellIdStr = match[1];
+
       showEmojiPicker();
     });
 
-    this.el.addEventListener("focusout", e => {
-      if (!picker.contains(e.relatedTarget)) {
+    grid.addEventListener("focusout", e => {
+      if (!picker.contains(e.relatedTarget) && !grid.contains(e.relatedTarget)) {
+        unselectCell();
         hideEmojiPicker();
       }
     });
@@ -84,7 +104,9 @@ Hooks.EmojiPicker = {
     hideEmojiPicker();
     picker.addEventListener("emoji-click", e => {
       const newEmoji = e.detail.unicode;
+      const targetCellId = parseInt(cellIdStr, 16);
       this.pushEvent("change_emoji", { id: targetCellId, value: newEmoji });
+      unselectCell();
       hideEmojiPicker();
     });
   }

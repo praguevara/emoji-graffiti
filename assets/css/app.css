@@ -5,5 +5,9 @@
 /* This file is for your main application CSS */
 
 .cell {
-  @apply aspect-square box-border text-2xl md:text-4xl rounded-md focus:border-2 focus:z-10 border-dashed border-purple-600 transition-transform duration-100 ease-in-out
+  @apply aspect-square box-border text-2xl md:text-4xl rounded-md border-dashed border-purple-600 transition-transform duration-100 ease-in-out
+}
+
+.cell-selected {
+  @apply border-2 z-10
 }
