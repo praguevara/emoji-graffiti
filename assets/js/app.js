@@ -65,10 +65,13 @@ Hooks.EmojiGrid = {
         return;
       }
 
-      selectCell(e.target);
-      
-      cellIdStr = match[1];
+      if (targetCell?.id == e.target.id) {
+        unselectCell();
+        hideEmojiPicker();
+        return;
+      }
 
+      selectCell(e.target);
       showEmojiPicker();
     });
 
@@ -104,7 +107,8 @@ Hooks.EmojiPicker = {
     hideEmojiPicker();
     picker.addEventListener("emoji-click", e => {
       const newEmoji = e.detail.unicode;
-      const targetCellId = parseInt(cellIdStr, 16);
+      const match = targetCell.id.match(/emo-(.+)/)[1];
+      const targetCellId = parseInt(match, 16);
       this.pushEvent("change_emoji", { id: targetCellId, value: newEmoji });
       unselectCell();
       hideEmojiPicker();
