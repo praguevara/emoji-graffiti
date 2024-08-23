@@ -23,6 +23,8 @@ defmodule EmojiGraffiti.Validator do
       0x1F700..0x1F77F,
       # Geometric Shapes Extended
       0x1F780..0x1F7FF,
+      # Miscellaneous Symbols and Arrows
+      0x2B00..0x2BFF,
       # Supplemental Arrows-C
       0x1F800..0x1F8FF,
       # Supplemental Symbols and Pictographs
