@@ -31,7 +31,7 @@ let targetCell = undefined;
 function showEmojiPicker() {
   picker.classList.remove('h-0');
   picker.classList.add('h-96');
-  scrollableContent.style.maxHeight = `calc(100vh - ${picker.offsetHeight}px)`;
+  scrollableContent.style.maxHeight = `calc(100svh - ${picker.offsetHeight}px)`;
   picker.focus();
 }
 
