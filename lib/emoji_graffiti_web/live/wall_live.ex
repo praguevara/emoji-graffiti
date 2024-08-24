@@ -5,7 +5,7 @@ defmodule EmojiGraffitiWeb.WallLive do
   alias EmojiGraffiti.Validator
 
   @column_size 12
-  @chunk_size 50 * @column_size
+  @chunk_size 300 * @column_size
 
   import EmojiGraffitiWeb.CellComponent, only: [cell: 1]
 
