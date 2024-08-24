@@ -4,7 +4,9 @@ defmodule EmojiGraffiti.Wall do
   alias EmojiGraffiti.Repo
   alias EmojiGraffiti.Cell
 
-  @max_count 1_000_000 - 1
+  require Logger
+
+  @max_count 100_000 - 1
 
   def start_link(_init_arg) do
     GenServer.start_link(__MODULE__, %{}, name: __MODULE__)
@@ -17,7 +19,7 @@ defmodule EmojiGraffiti.Wall do
   def get(_id), do: {:error, :invalid_id}
 
   def get_many(from, to) when from >= 0 and to > from and to <= @max_count do
-    IO.puts("Getting cells from #{from} to #{to}")
+    Logger.debug("Getting cells from #{from} to #{to}")
     GenServer.call(__MODULE__, {:get_many, from, to})
   end
 
@@ -112,7 +114,7 @@ defmodule EmojiGraffiti.Wall do
   end
 
   defp persist_to_db(%Cell{emoji: emoji} = cell) do
-    IO.puts("Writing to db cell #{cell.id}")
+    Logger.info("Writing to db cell #{inspect(cell)}")
     Repo.insert!(cell, on_conflict: [set: [emoji: emoji]], conflict_target: :id)
   end
 end
