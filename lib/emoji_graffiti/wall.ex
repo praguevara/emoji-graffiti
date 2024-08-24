@@ -4,25 +4,26 @@ defmodule EmojiGraffiti.Wall do
   alias EmojiGraffiti.Repo
   alias EmojiGraffiti.Cell
 
-  @max_id 9999
+  @max_count 1_000_000 - 1
 
   def start_link(_init_arg) do
     GenServer.start_link(__MODULE__, %{}, name: __MODULE__)
   end
 
-  def get(id) when id >= 0 and id <= @max_id do
+  def get(id) when id >= 0 and id <= @max_count do
     GenServer.call(__MODULE__, {:get, id})
   end
 
   def get(_id), do: {:error, :invalid_id}
 
-  def get_many(from, to) when from >= 0 and to <= @max_id and from <= to do
+  def get_many(from, to) when from >= 0 and to > from and to <= @max_count do
+    IO.puts("Getting cells from #{from} to #{to}")
     GenServer.call(__MODULE__, {:get_many, from, to})
   end
 
-  def get_many(_from, _to), do: {:error, :invalid_range}
+  def get_many(_from, _count), do: {:error, :invalid_range}
 
-  def update(id, emoji) when id >= 0 and id <= @max_id do
+  def update(id, emoji) when id >= 0 and id <= @max_count do
     GenServer.call(__MODULE__, {:update, id, emoji})
   end
 
@@ -81,7 +82,8 @@ defmodule EmojiGraffiti.Wall do
   end
 
   defp get_or_fetch_cells(from, to, state) do
-    all_present = Enum.all?(Enum.to_list(from..to), &Map.has_key?(state, &1))
+    all_present =
+      Enum.all?(Enum.to_list(from..to), &Map.has_key?(state, &1))
 
     if all_present do
       {Map.take(state, Enum.to_list(from..to)), state}

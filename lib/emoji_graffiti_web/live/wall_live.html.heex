@@ -11,16 +11,17 @@
       </div>
     </div>
     <div class="relative max-w-screen-lg mx-auto">
-      <div id="emoji-grid" class="grid px-4" phx-hook="EmojiGrid">
-        <%= for row <- Enum.chunk_every(@emoji, 12) do %>
+      <div id="emoji-grid" phx-hook="EmojiGrid" class="grid px-4" phx-update="stream">
+        <%= for {row_id, %{id: id, row: row}} <- @streams.rows do %>
           <div class="grid grid-cols-12">
-            <%= for %{id: i, emoji: emoji} <- row do %>
-              <.cell i={i} emoji={emoji} />
+            <%= for %{id: id, emoji: emoji} <- row do %>
+              <.cell id={"emo-#{Integer.to_string(id, 16)}"} emoji={emoji} />
             <% end %>
           </div>
         <% end %>
       </div>
     </div>
+    <div id="infinite-scroll" class="h-96" phx-hook="InfiniteScroll"></div>
   </div>
   <emoji-picker
     id="emoji-picker"

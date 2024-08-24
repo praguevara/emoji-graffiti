@@ -3,7 +3,7 @@ defmodule EmojiGraffitiWeb.CellComponent do
 
   def cell(assigns) do
     ~H"""
-    <button class="cell" id={"emo-#{Integer.to_string(@i, 16)}"}>
+    <button class="cell" id={@id} }>
       <%= @emoji %>
     </button>
     """
